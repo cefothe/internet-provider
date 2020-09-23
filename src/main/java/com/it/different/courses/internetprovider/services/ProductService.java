@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.it.different.courses.internetprovider.persistence.entity.Product;
 import com.it.different.courses.internetprovider.persistence.repository.ProductRepository;
 import com.it.different.courses.internetprovider.services.dto.ProductDTO;
+import com.it.different.courses.internetprovider.services.mapper.ProductDTOMapper;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProductService {
 	public List<ProductDTO> findAll() {
 		return productRepository.findAll()
 				.stream()
-				.map(this::map)
+				.map(ProductDTOMapper.F::map)
 				.collect(Collectors.toList());
 	}
 
@@ -32,17 +33,8 @@ public class ProductService {
 				.fee(productDTO.getFee())
 				.createdBy(authenticationFacade.getAuthentication())
 				.build();
-		return Optional.of(productRepository.save(product)).map(
-				this::map
-		).orElseThrow(RuntimeException::new);
+		return Optional.of(productRepository.save(product))
+				.map(ProductDTOMapper.F::map).orElseThrow(RuntimeException::new);
 	}
 
-	public ProductDTO map(Product product) {
-		return new ProductDTO(
-				product.getId(),
-				product.getName(),
-				product.getFee(),
-				product.getBandwidth(),
-				product.getStatus().name());
-	}
 }

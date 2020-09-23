@@ -11,6 +11,7 @@ import com.it.different.courses.internetprovider.persistence.repository.Customer
 import com.it.different.courses.internetprovider.services.dto.ClientType;
 import com.it.different.courses.internetprovider.services.dto.CustomerDTO;
 import com.it.different.courses.internetprovider.services.exceptions.ClientNotFoundException;
+import com.it.different.courses.internetprovider.services.mapper.CustomerDTOMapper;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.util.Pair;
@@ -45,31 +46,10 @@ public class CustomerService {
 
 	public List<CustomerDTO> getAll() {
 		return customerRepository.findAll().stream()
-				.map(this::map)
+				.map(custom -> CustomerDTOMapper.F.map(custom))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
-
-	public CustomerDTO map(Customer customer) {
-		if(customer instanceof LegalCustomer){
-			var legalCustomer = (LegalCustomer) customer;
-			return CustomerDTO.builder()
-					.clientType(ClientType.LEGAL)
-					.companyName(legalCustomer.getCompanyName())
-					.responsiblePerson(legalCustomer.getResponsiblePerson())
-					.vatNumber(legalCustomer.getVatNumber()).build();
-		}
-		if(customer instanceof PhysicalCustomer){
-			var physicalCustomer = (PhysicalCustomer) customer;
-			return CustomerDTO.builder()
-					.clientType(ClientType.PHYSICAL)
-					.firstName(physicalCustomer.getFirstName())
-					.lastName(physicalCustomer.getLastName())
-					.build();
-		}
-		return null;
-	}
-
 	public Pair<ClientType, Customer> findClientAndClientType(Long id){
 		var client = customerRepository.findById(id).orElseThrow(ClientNotFoundException::new);
 		return  Pair.of(determinateClientType(client), client);
