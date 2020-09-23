@@ -1,5 +1,6 @@
 package com.it.different.courses.internetprovider.persistence.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "roles")
 public class Role extends BaseEntity implements GrantedAuthority {
 
+	@Column(unique = true)
     @Enumerated(EnumType.STRING)
     private RoleType name;
 
@@ -24,7 +26,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
     }
 
     public enum RoleType{
-        ROLE_CUSTOMER, ROLE_ADMIN, ROLE_MODERATOR
+        ROLE_CUSTOMER, ROLE_ADMIN;
     }
 
 }

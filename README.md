@@ -1,4 +1,4 @@
-#Spring Boot - Training courses
+# Spring Boot - Training courses
 ## Task description
 An internet provider needs a platform which will be used by customers to pay their monthly fees.
 It has three products: silver, gold and platinum. Each product has different bandwidth and monthly fee. A client can subscribe for one of those products. Every single client can be either a physical person or legal entity. On a certain date a bill appears in the platform which the client has to pay. When the payment is completed the customer must receive a document. The document type depends on customer’s type as follows the physical person receives a ticket and
@@ -10,10 +10,10 @@ There would be two types of customer in the system. The first one is a legal ent
 ### Administrator
 Administrator is a role in the system that will manage the entity product, will be responsible to list all existing clients, and all bilings related to them.
 
-### User stories
+### User stories    
 1) As a physical person I need to be able to purchase exactly one product.
 2) As a legal entity I need to be able to purchase more than one product.
-3) As an administrator I need to be able to see all products related to their clients.
+3) As an administrator I need to be able to see all products.
 4) As a client(physical or legal) in a certain time during the month I will receive a receipt from the system.
 5) As a client(physical or legal) I need to be able to pay the receipt.
 6) As a system if there is a not paid receipt I need to stop their product.
